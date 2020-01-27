@@ -1,0 +1,41 @@
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Metric</th>
+      <th>Definition</th>
+      <th>Ad Format</th>
+      <th>Environment</th>
+      <th>Type</th>
+      <th>QA Status</th>
+      <% if show_suite %>
+        <th>Suite</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% metrics.each do |metric| %>
+      <tr data-item="<%= metric.id %>">
+        <% metric_element_id = (0...8).map { (65 + rand(26)).chr }.join %>
+        <td class="mdl-data-table__cell--non-numeric">
+          <%= link_to metric.name, metric %>
+          <%= link_to('<i class="material-icons">mode_edit</i>'.html_safe, edit_metric_path(metric)) %>
+        </td>
+        <td class="definition"><span id="<%= metric_element_id %>"><%= metric.definition %></span></td>
+        <div class="mdl-tooltip" for="<%= metric_element_id %>"><%= metric.definition %></div>
+        <td><%= metric.ad_format %></td>
+        <td><%= metric.environment %></td>
+        <td><%= metric.metric_type.capitalize %></td>
+        <td>
+          <% if metric.passed_test_slots == metric.test_slots_count %>
+            <i class="material-icons checkmark">check</i> Passed <%= metric.passed_test_slots %> of <%= metric.test_slots_count %> test slots
+          <% else %>
+            Passed <%= metric.passed_test_slots %> of <%= metric.test_slots_count %> test slots
+          <% end %>
+      </td>
+      <% if show_suite %>
+        <td><%= link_to metric.suite.name, metric.suite %></td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,37 @@
+<h5>A <strong>suite</strong> is a specific integration or environment that contains multiple metrics.</h5>
+<%= link_to 'Create New Suite', new_suite_path, class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= link_to 'Export Suites as TSV', suites_path(@suites, format: :csv), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= render partial: 'deleteform', locals: {table: 'suites'} %>
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Suite</th>
+      <th>Metrics</th>
+      <th>QA Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @suites.each do |suite| %>
+    <% passed_metrics = 0 %>
+    <% suite.metrics.each do |metric| %>
+      <% if metric.passed_test_slots == metric.test_slots_count %>
+        <% passed_metrics += 1 %>
+      <% end %>
+    <% end %>
+      <tr data-item="<%= suite.id %>">
+        <td class="mdl-data-table__cell--non-numeric">
+          <%= link_to suite.name, suite %>
+          <%= link_to('<i class="material-icons">mode_edit</i>'.html_safe, edit_suite_path(suite)) %>
+        </td>
+        <td><%= suite.metrics.count %> <%= "metric".pluralize(suite.metrics.count) %></td>
+        <td>
+          <% if passed_metrics == suite.metrics.count %>
+            <i class="material-icons checkmark">check</i> Passed <%= passed_metrics %> of <%= suite.metrics.count %> metrics
+          <% else %>
+            Passed <%= passed_metrics %> of <%= suite.metrics.count %> metrics
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

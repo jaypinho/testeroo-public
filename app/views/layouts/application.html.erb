@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Testeroo</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', 'https://fonts.googleapis.com/icon?family=Material+Icons', 'https://code.getmdl.io/1.3.0/material.deep_purple-deep_orange.min.css', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'https://code.getmdl.io/1.3.0/material.min.js', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+
+  <body>
+    <div class="mdl-layout mdl-js-layout">
+      <header class="mdl-layout__header">
+        <div class="mdl-layout-icon"></div>
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout__title">Testeroo</span>
+          <div class="mdl-layout-spacer"></div>
+          <nav class="mdl-navigation">
+            <%= link_to 'Suites', suites_path, class: 'mdl-navigation__link' %>
+            <%= link_to 'Metrics', metrics_path, class: 'mdl-navigation__link' %>
+            <%= link_to 'Tests', tests_path, class: 'mdl-navigation__link' %>
+          </nav>
+        </div>
+      </header>
+      <div class="mdl-layout__drawer">
+        <span class="mdl-layout__title">Testeroo</span>
+        <nav class="mdl-navigation">
+          <%= link_to 'Suites', suites_path, class: 'mdl-navigation__link' %>
+          <%= link_to 'Metrics', metrics_path, class: 'mdl-navigation__link' %>
+          <%= link_to 'Tests', tests_path, class: 'mdl-navigation__link' %>
+          <hr>
+          <%= link_to 'Incomplete Tests', incomplete_path, class: 'mdl-navigation__link' %>
+          <%= link_to 'Import Tests', import_tests_path, class: 'mdl-navigation__link' %>
+          <%= link_to 'Generic Tester', generic_tester_path, class: 'mdl-navigation__link' %>
+        </nav>
+      </div>
+      <main class="mdl-layout__content">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--4-col-phone">
+            <%= yield %>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

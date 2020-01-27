@@ -1,0 +1,5 @@
+<h5>A <strong>metric</strong> is a measurement of a specific action or status.</h5>
+<%= link_to 'Create New Metric', new_metric_path, class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= link_to 'Export Metrics as TSV', metrics_path(@metrics, format: :csv), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= render partial: 'deleteform', locals: {table: 'metrics'} %>
+<%= render partial: 'metrics', locals: {metrics: @metrics, show_suite: true} %>

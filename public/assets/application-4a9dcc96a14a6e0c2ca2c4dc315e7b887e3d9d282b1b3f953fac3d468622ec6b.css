@@ -1,0 +1,64 @@
+/* line 5, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+.mdl-data-table {
+  margin: 20px;
+}
+
+/* line 9, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+.definition {
+  white-space: normal;
+}
+
+/* line 13, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+.checkmark {
+  color: #62cc17;
+  vertical-align: bottom;
+}
+
+/* line 18, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+.delete-assignment {
+  color: gray;
+  vertical-align: bottom;
+}
+
+/* line 23, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+.metric-suite-name {
+  text-decoration: inherit;
+}
+
+/* line 27, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+#what-is-test-slot {
+  color: gray;
+}
+/* line 7, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/tests.scss */
+.demo-card-wide.mdl-card {
+  width: 512px;
+  margin: 20px;
+}
+
+/* line 11, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/tests.scss */
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url("https://getmdl.io/assets/demos/welcome_card.jpg") center/cover;
+}
+
+/* line 16, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/tests.scss */
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+

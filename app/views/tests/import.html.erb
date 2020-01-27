@@ -1,0 +1,55 @@
+<%= form_tag(import_tests_path, multipart: true) do %>
+  <%= label_tag 'file', 'Upload CSV file of test cases here' %>
+  <%= file_field_tag 'file', accept: 'text/csv', required: true %>
+  <p>&nbsp;</p>
+  <%= submit_tag "Upload CSV", class: "mdl-button mdl-js-button mdl-button--primary" %>
+<% end %>
+
+<% if @csv_tests %>
+  <% csv_tests = [] %>
+  <% @csv_tests.each do |row| %>
+    <% csv_tests << Test.new(:description => row[0], :expected_result => row[1], :test_link => row[2]) %>
+  <% end %>
+
+  <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">Description</th>
+        <th class="mdl-data-table__cell--non-numeric">Expected Result</th>
+        <th class="mdl-data-table__cell--non-numeric">Test Link</th>
+      </tr>
+    </thead>
+    <tbody id="csv-rows">
+      <% csv_tests.each do |test| %>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric definition"><%= simple_format test.description %></td>
+          <td class="mdl-data-table__cell--non-numeric definition"><%= simple_format test.expected_result %></td>
+          <td class="mdl-data-table__cell--non-numeric"><%= test.test_link %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= form_tag import_tests_path, id: 'csv-rows-form' do %>
+
+  <% end %>
+  <%= link_to "Import Tests", "javascript:void(0)", id: 'import-tests-btn', class: "mdl-button mdl-js-button mdl-button--primary" %>
+
+  <script>
+    document.getElementById('import-tests-btn').addEventListener('click', function() {
+      var input = null;
+      var checks = document.getElementById('csv-rows').getElementsByTagName('label');
+      for (var i = 0; i < checks.length; ++i) {
+        if(checks[i].classList.contains('is-checked')) {
+          input = document.createElement("input");
+          input.setAttribute("type", "hidden");
+          input.setAttribute("name", "test[]");
+          input.setAttribute("value", checks[i].parentElement.parentElement.getElementsByTagName('td')[1].innerHTML+"|"+checks[i].parentElement.parentElement.getElementsByTagName('td')[2].innerHTML+"|"+checks[i].parentElement.parentElement.getElementsByTagName('td')[3].innerHTML);
+          document.getElementById("csv-rows-form").appendChild(input);
+        }
+      }
+      document.getElementById('csv-rows-form').submit();
+    });
+  </script>
+
+<% end %>

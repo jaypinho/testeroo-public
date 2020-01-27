@@ -1,0 +1,9 @@
+<% @assignments.each do |assignment| %>
+  <p>
+    <%= assignment.metric_id %>
+    <br>
+    <%= assignment.test_id %>
+    <br>
+    <%= assignment.test_slot %>
+  </p>
+<% end %>

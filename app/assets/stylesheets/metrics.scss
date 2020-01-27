@@ -1,0 +1,29 @@
+// Place all the styles related to the Metrics controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.mdl-data-table {
+  margin: 20px;
+}
+
+.definition {
+  white-space: normal;
+}
+
+.checkmark {
+  color: #62cc17;
+  vertical-align: bottom;
+}
+
+.delete-assignment {
+  color: gray;
+  vertical-align: bottom;
+}
+
+.metric-suite-name {
+  text-decoration: inherit;
+}
+
+#what-is-test-slot {
+  color: gray;
+}

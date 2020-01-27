@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  metric: one
+  test: one
+  test_slot: 1
+
+two:
+  metric: two
+  test: two
+  test_slot: 1

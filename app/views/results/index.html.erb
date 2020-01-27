@@ -1,0 +1,2 @@
+<%= link_to 'Export Results as TSV', test_results_path(params[:test_id], format: :csv), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= render partial: 'results', locals: {results: @results} %>

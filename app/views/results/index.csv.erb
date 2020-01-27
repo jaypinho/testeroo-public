@@ -1,0 +1,5 @@
+<% headers = ['Test Description', 'Test Expected Result', 'Test Link', 'Started', 'Finished', 'Status', 'Note', 'JIRA Ticket', 'User'] %>
+<%= CSV.generate_line(headers, :col_sep => "\t") -%>
+<% @results.each do |result| %>
+<%= CSV.generate_line([result.test.description, result.test.expected_result, result.test.test_link, result.created_at, result.completed_at, result.passed_to_string.capitalize, result.note, result.jira, result.user_id], :col_sep => "\t").html_safe -%>
+<% end %>

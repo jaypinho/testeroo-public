@@ -1,0 +1,33 @@
+<% if flash['notice'] %>
+  <div class="notice"><strong><%= flash['notice'] %></strong></div>
+<% end %>
+<h4><%= link_to @metric.suite.name, @metric.suite, class: 'metric-suite-name' %> - <%= @metric.name %></h4>
+<h6><%= @metric.definition %></h6>
+<br>
+This metric has passed <strong><%= @metric.passed_test_slots %></strong> out of <strong><%= @metric.test_slots_count %></strong> test slots. <span id='what-is-test-slot'>(What is a test slot?)</span>
+<div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="what-is-test-slot">
+  <p>A test slot contains one or more tests that, when passed, fulfill a specific criterion for the given metric. Any one of the tests within a given test slot can fulfill the test slot's criterion on its own.</p>
+  <p>A metric may contain multiple test slots, each of which represents a category of user behavior. All test slots must pass before the metric has completed QA.</p>
+</div>
+<%= render partial: 'deleteform', locals: {table: 'assignments'} %>
+<br>
+<% (1..@metric.test_slots_count).each do |slot| %>
+  <h5><%= '<i class="material-icons checkmark">check</i> '.html_safe if @metric.assignments.where(:test_slot => slot).count > 0 && @metric.did_this_test_slot_pass(slot) %>Test Slot <%= slot %></h5>
+  <%= render partial: 'tests/tests', locals: {tests: Test.joins(:assignments).where('assignments.metric_id = ? AND assignments.test_slot = ?', @metric.id, slot), assignment: {metric_id: @metric.id, test_slot: slot} } %>
+  <% @metric_tests_array[slot - 1] = @metric.assignments.new(:test_slot => slot) %>
+  <%= form_for(@metric_tests_array[slot - 1]) do |f| %>
+    <%= f.hidden_field(:metric_id) %>
+    <%= f.hidden_field(:test_slot) %>
+    <%= f.label(:test_id, "Add a new test to Test Slot #{slot}:") %>
+    <%= f.collection_select(:test_id, Test.where('id NOT IN (?)', Test.select(:id).joins(:assignments).where('assignments.metric_id = ? AND assignments.test_slot = ?', @metric.id, slot)), :id, proc {|x| truncate(x.description.to_s, length: 100)}, {}, {class: 'mdl-textfield__input test-list', required: true}) %>
+  <% end %>
+  <br>
+<% end %>
+
+<script>
+for (var i = 0; i < document.getElementsByClassName("new_assignment").length; i++) {
+  document.getElementsByClassName("test-list")[i].addEventListener('change', function(event) {
+    event.target.parentElement.submit();
+  });
+}
+</script>

@@ -1,0 +1,37 @@
+/* line 5, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/metrics.scss */
+.mdl-data-table {
+  margin: 20px;
+}
+/* line 7, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/tests.scss */
+.demo-card-wide.mdl-card {
+  width: 512px;
+  margin: 20px;
+}
+
+/* line 11, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/tests.scss */
+.demo-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url("https://getmdl.io/assets/demos/welcome_card.jpg") center/cover;
+}
+
+/* line 16, /Users/jaypinho/workspace/testeroo/app/assets/stylesheets/tests.scss */
+.demo-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+

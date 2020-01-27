@@ -1,0 +1,23 @@
+<%= form_for(@test) do |f| %>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_area(:description, class: 'mdl-textfield__input', required: true) %>
+    <%= f.label(:description, 'Enter description here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_area(:expected_result, class: 'mdl-textfield__input', required: true) %>
+    <%= f.label(:expected_result, 'Enter expected result here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field(:test_link, class: 'mdl-textfield__input') %>
+    <%= f.label(:test_link, 'Enter test link here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <!-- Colored FAB button with ripple -->
+  <%= f.button(class: 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored') do %>
+    <i class="material-icons">arrow_forward</i>
+  <% end %>
+
+<% end %>

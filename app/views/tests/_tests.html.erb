@@ -1,0 +1,31 @@
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Description</th>
+      <th class="mdl-data-table__cell--non-numeric">Expected Result</th>
+      <th class="mdl-data-table__cell--non-numeric">Test Link</th>
+      <th class="mdl-data-table__cell--non-numeric">Last Test Completed</th>
+      <th class="mdl-data-table__cell--non-numeric"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% tests.each do |test| %>
+      <tr data-item="<%= local_assigns[:assignment] ? test.assignments.where(:metric_id => assignment[:metric_id], :test_slot => assignment[:test_slot]).first.id : test.id %>">
+        <td class="mdl-data-table__cell--non-numeric definition">
+          <%= test.description %>
+           <!-- IMPORTANT: Editing a test might not be desired behavior, as it would allow past results to stay as is, even after the definition of the test itself has changed  -->
+          <%= link_to('<i class="material-icons">mode_edit</i>'.html_safe, edit_test_path(test)) %>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric definition">
+          <%= test.expected_result %>
+        </td>
+        <td class="mdl-data-table__cell--non-numeric"><%= link_to test.test_link, test.test_link, :target => "_blank" unless test.test_link.blank? %></td>
+        <td class="mdl-data-table__cell--non-numeric"><%= "<strong>#{test.most_recent_test.passed_to_string.capitalize}</strong> on #{test.most_recent_test.completed_at.strftime('%b %-d, %Y')}".html_safe unless test.most_recent_test.blank? || test.most_recent_test.completed_at.blank? %></td>
+        <td class="mdl-data-table__cell--non-numeric">
+          <%= link_to 'Start Test', new_test_result_path(test), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+          <%= link_to 'View Test Results', test_results_path(test), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

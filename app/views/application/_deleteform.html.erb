@@ -1,0 +1,13 @@
+<%= link_to "Delete selected #{table}", "javascript:void(0)", id: 'delete-items-link' %>
+<%= form_tag(delete_path, method: :delete, id: 'delete-items-form') do %>
+  <%= hidden_field_tag :deletion_table, table %>
+<% end %>
+
+<script>
+document.getElementById('delete-items-link').addEventListener('click', function() {
+  var make_sure = confirm("Are you sure you want to delete the selected <%= table %>?");
+  if (make_sure) {
+    deleteItems();
+  }
+});
+</script>

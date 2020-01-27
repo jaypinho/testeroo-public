@@ -1,0 +1,165 @@
+<!-- Three Line List with secondary info and action -->
+<style>
+.demo-list-three {
+  width: 650px;
+}
+</style>
+
+<ul class="demo-list-three mdl-list">
+  <li class="mdl-list__item mdl-list__item--three-line">
+    <span class="mdl-list__item-primary-content">
+      <i class="material-icons mdl-list__item-avatar">find_in_page</i>
+      <span>Test Description</span>
+      <span class="mdl-list__item-text-body">
+        <%= @result.test.description %>
+      </span>
+    </span>
+    <span class="mdl-list__item-secondary-content">
+      <a class="mdl-list__item-secondary-action" href="<%= test_results_path(@result.test, :filter => 'failed') %>"><i class="material-icons">star_border</i></a>
+    </span>
+  </li>
+  <li class="mdl-list__item mdl-list__item--three-line">
+    <span class="mdl-list__item-primary-content">
+      <i class="material-icons  mdl-list__item-avatar">description</i>
+      <span>Expected Result</span>
+      <span class="mdl-list__item-text-body">
+        <%= @result.test.expected_result %>
+      </span>
+    </span>
+    <span class="mdl-list__item-secondary-content">
+      <a class="mdl-list__item-secondary-action" href="<%= test_results_path(@result.test, :filter => 'passed') %>"><i class="material-icons">star</i></a>
+    </span>
+  </li>
+  <% unless @result.test.test_link.blank? %>
+  <li class="mdl-list__item mdl-list__item--three-line">
+    <span class="mdl-list__item-primary-content">
+      <i class="material-icons  mdl-list__item-avatar">link</i>
+      <span>Test Link</span>
+      <span class="mdl-list__item-text-body">
+        You can run the test using this link: <%= link_to @result.test.test_link, @result.test.test_link, :target => "_blank" %>
+      </span>
+    </span>
+  </li>
+  <% end %>
+</ul>
+
+<%= form_for([@result.test, @result], html: {id: 'result-form'}) do |f| %>
+
+  <%= f.label(:passed, class: 'mdl-switch mdl-js-switch mdl-js-ripple-effect') do %>
+   <%= f.check_box(:passed, checked: true, class: 'mdl-switch__input') %>
+   <span class="mdl-switch__label">Passed <i id='thumbs-up' class="material-icons">thumb_up</i><i id='thumbs-down' class="material-icons" style="display: none;">thumb_down</i></span>
+  <% end %>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_area(:note, class: 'mdl-textfield__input') %>
+    <%= f.label(:note, 'Enter notes here...', class: 'mdl-textfield__label') %>
+  </div>
+  <br>
+  <%= link_to "<i class='material-icons md-36'>timer</i>".html_safe, "javascript:void(0)", id: 'start-timer-btn', class: 'mdl-button mdl-js-button mdl-button--icon' %>
+  <div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="start-timer-btn">
+    <% TEST_EVENTS.each_with_index do |event, index| %>
+      <% unless index == 0 %>
+        <br>
+      <% end %>
+      <% if event[:keys][:start] == event[:keys][:end] %>
+        <%= "#{event[:keys][:start].chr.gsub("\r", "Enter")} = #{event[:name]}" %>
+      <% else %>
+        <%= "#{event[:keys][:start].chr} (start), #{event[:keys][:end].chr} (end) = #{event[:name]}" %>
+      <% end %>
+    <% end %>
+    <p>&nbsp;</p>
+    (Escape key to stop)
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field(:jira, class: 'mdl-textfield__input') %>
+    <%= f.label(:jira, 'Enter JIRA ticket here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <!-- Colored FAB button with ripple -->
+  <%= f.button(class: 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored') do %>
+    <i class="material-icons">arrow_forward</i>
+  <% end %>
+  &nbsp;&nbsp;&nbsp;
+  <%= hidden_field_tag :complete_later, nil, :disabled => true %>
+  <%= link_to "<i class='material-icons md-36'>watch_later</i>".html_safe, "javascript:void(0)", id: 'complete-later-btn', class: 'mdl-button mdl-js-button mdl-button--icon' %>
+  <div class="mdl-tooltip" data-mdl-for="complete-later-btn">
+    Complete Test Later
+  </div>
+
+<% end %>
+
+<div>
+  <table id="result-events-table" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th>Timestamp In</th>
+        <th>Event</th>
+        <th>Timestamp Out</th>
+        <th>Time Elapsed</th>
+        <th>Cumulative Time Elapsed</th>
+        <th>Time Since Prior Event Started</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+<% if @logs != nil && @logs.length > 0 %>
+  <div>
+    <h4>Actual Logs</h4>
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+      <thead>
+        <tr>
+          <% @logs.first.each do |key, value| %>
+            <th>
+              <%= key %>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% (0..@logs.length - 1).each do |row| %>
+          <tr>
+            <% @logs[row].each do |key, value| %>
+              <td class="definition">
+                <%= value %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+
+<p>&nbsp;</p>
+<div>
+  <h4>Test Metric Assignments</h4>
+  <%= render partial: 'metrics/metrics', locals: {metrics: @result.test.metrics.order(suite_id: :asc), show_suite: true} %>
+  <p>&nbsp;</p>
+  <h4>Test History</h4>
+  <%= render partial: 'results', locals: {results: @result.test.results.order(created_at: :desc)} %>
+</div>
+
+<script>
+
+  document.getElementById('result_passed').addEventListener('change', function() {
+    if(document.getElementById('result_passed').checked == true) {
+      document.getElementById('thumbs-up').style.display = '';
+      document.getElementById('thumbs-down').style.display = 'none';
+      document.getElementById('result_note').required = false;
+    } else {
+      document.getElementById('thumbs-down').style.display = '';
+      document.getElementById('thumbs-up').style.display = 'none';
+      document.getElementById('result_note').required = true;
+    }
+  });
+
+  document.getElementById('complete-later-btn').addEventListener('click', function() {
+    document.getElementById('complete_later').disabled = false;
+    document.getElementById('result-form').submit();
+  });
+
+</script>

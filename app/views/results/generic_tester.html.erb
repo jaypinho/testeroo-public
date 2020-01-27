@@ -1,0 +1,37 @@
+<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+  <%= text_area_tag(:result_note, nil, {class: 'mdl-textfield__input'}) %>
+  <%= label_tag(:result_note, 'Enter notes here...', class: 'mdl-textfield__label') %>
+</div>
+<br>
+<%= link_to "<i class='material-icons md-36'>timer</i>".html_safe, "javascript:void(0)", id: 'start-timer-btn', class: 'mdl-button mdl-js-button mdl-button--icon' %>
+<div class="mdl-tooltip mdl-tooltip--large" data-mdl-for="start-timer-btn">
+  <% TEST_EVENTS.each_with_index do |event, index| %>
+    <% unless index == 0 %>
+      <br>
+    <% end %>
+    <% if event[:keys][:start] == event[:keys][:end] %>
+      <%= "#{event[:keys][:start].chr.gsub("\r", "Enter")} = #{event[:name]}" %>
+    <% else %>
+      <%= "#{event[:keys][:start].chr} (start), #{event[:keys][:end].chr} (end) = #{event[:name]}" %>
+    <% end %>
+  <% end %>
+  <p>&nbsp;</p>
+  (Escape key to stop)
+</div>
+
+<div>
+  <table id="result-events-table" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th>Timestamp In</th>
+        <th>Event</th>
+        <th>Timestamp Out</th>
+        <th>Time Elapsed</th>
+        <th>Cumulative Time Elapsed</th>
+        <th>Time Since Prior Event Started</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>

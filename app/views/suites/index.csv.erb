@@ -1,0 +1,5 @@
+<% headers = ['Name', 'Max Days Since Last Passed Test'] %>
+<%= CSV.generate_line(headers, :col_sep => "\t") -%>
+<% @suites.each do |suite| %>
+<%= CSV.generate_line([suite.name, suite.max_days_since_last_passed_test], :col_sep => "\t").html_safe -%>
+<% end %>

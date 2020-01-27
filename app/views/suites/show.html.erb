@@ -1,0 +1,8 @@
+<h4><%= @suite.name %></h4>
+<p/>
+Contains the following metrics:
+<p/>
+<p>
+  <%= render partial: 'deleteform', locals: {table: 'metrics'} %>
+</p>
+<%= render partial: 'metrics/metrics', locals: {metrics: @suite.metrics, show_suite: false} %>

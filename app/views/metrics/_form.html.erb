@@ -1,0 +1,61 @@
+<%= form_for(@metric) do |f| %>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field(:name, class: 'mdl-textfield__input', required: true) %>
+    <%= f.label(:name, 'Enter metric name here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_area(:definition, class: 'mdl-textfield__input', required: true) %>
+    <%= f.label(:definition, 'Enter metric definition here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field(:ad_format, class: 'mdl-textfield__input', required: true) %>
+    <%= f.label(:ad_format, 'Enter metric ad format here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field(:environment, class: 'mdl-textfield__input', required: true) %>
+    <%= f.label(:environment, 'Enter metric environment here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.label(:metric_type, 'Enter metric type here...', class: 'mdl-textfield__label') %>
+    <p>&nbsp;</p>
+    <%= f.select(:metric_type, [['Display', 'display'], ['Video', 'video'], ['Content', 'content']], class: 'mdl-textfield__input', required: true) %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <span class="mdl-badge" data-badge="5" id="test-slots-cur-val">Test Slots&nbsp;</span>
+    <p>&nbsp;</p>
+    <%= f.range_field(:test_slots_count, in: 1..10, class: 'mdl-slider mdl-js-slider', required: true) %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.label(:max_days_since_last_passed_test, 'Maximum days since last passed test') %>
+    <%= f.number_field(:max_days_since_last_passed_test, in: 1..90) %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.label(:suite_id, 'Select the metric\'s suite...', class: 'mdl-textfield__label') %>
+    <p>&nbsp;</p>
+    <%= f.collection_select(:suite_id, Suite.all, :id, :name, class: 'mdl-textfield__input', required: true) %>
+  </div>
+  <p>&nbsp;</p>
+  <!-- Colored FAB button with ripple -->
+  <%= f.button(class: 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored') do %>
+    <i class="material-icons">arrow_forward</i>
+  <% end %>
+
+<% end %>
+
+<script>
+
+  document.getElementById('test-slots-cur-val').dataset.badge = document.getElementById('metric_test_slots_count').value;
+
+  document.getElementById('metric_test_slots_count').addEventListener('input', function() {
+    document.getElementById('test-slots-cur-val').dataset.badge = document.getElementById('metric_test_slots_count').value;
+  });
+
+</script>

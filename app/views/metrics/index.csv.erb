@@ -1,0 +1,5 @@
+<% headers = ['Name', 'Definition', 'Ad Format', 'Environment', 'Metric Type', 'Test Slots Count', 'Max Days Since Last Passed Test', 'Suite'] %>
+<%= CSV.generate_line(headers, :col_sep => "\t") -%>
+<% @metrics.each do |metric| %>
+<%= CSV.generate_line([metric.name, metric.definition, metric.ad_format, metric.environment, metric.metric_type.capitalize, metric.test_slots_count, metric.max_days_since_last_passed_test, metric.suite.name], :col_sep => "\t").html_safe -%>
+<% end %>

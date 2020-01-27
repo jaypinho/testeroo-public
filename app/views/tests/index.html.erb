@@ -1,0 +1,11 @@
+<h5>A <strong>test</strong> is an individual user behavioral scenario that can be reproduced in order to verify the result against an expected measurement outcome.</h5>
+<%= link_to 'Create New Test', new_test_path, class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<% if params.has_key?(:priority) %>
+  <%= link_to 'View All Tests', tests_path, class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<% else %>
+  <%= link_to 'View High-Priority Tests', tests_path(:priority => 'true'), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<% end %>
+<%= link_to 'View Incomplete Tests', incomplete_path, class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= link_to 'Export Tests as TSV', tests_path(@tests, format: :csv), class: 'mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect' %>
+<%= render partial: 'deleteform', locals: {table: 'tests'} %>
+<%= render partial: 'tests', locals: {tests: @tests} %>

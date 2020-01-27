@@ -1,0 +1,33 @@
+<table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Date Started</th>
+      <th>Date Completed</th>
+      <th>Tester</th>
+      <th>Result</th>
+      <th>Note</th>
+      <th>JIRA Ticket</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.each do |result| %>
+      <tr>
+        <td class="mdl-data-table__cell--non-numeric"><%= result.created_at.strftime('%b %-d, %Y') %></td>
+        <td>
+          <%= result.completed_at.strftime('%b %-d, %Y') unless result.completed_at.blank? %>
+          <%= link_to('<i class="material-icons">mode_edit</i>'.html_safe, edit_test_result_path(result.test, result)) if result.completed_at.blank? && result.created_at >= MAX_DAYS_ALLOWED_TO_FINISH_AN_INCOMPLETE_TEST.days.ago  %>
+        </td>
+        <td><%= result.user.name %></td>
+        <td><%= result.passed_to_string.capitalize %></td>
+        <td class="definition"><%= simple_format(result.note) %></td>
+        <td>
+          <% if result.jira.blank? == false && URI.parse(result.jira) && !URI.parse(result.jira).host.nil? %>
+            <%= link_to result.jira, result.jira, :target => "_blank" %>
+          <% else %>
+            <%= result.jira %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

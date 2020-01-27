@@ -1,0 +1,18 @@
+<%= form_for(@suite) do |f| %>
+
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field(:name, class: 'mdl-textfield__input') %>
+    <%= f.label(:name, 'Enter suite name here...', class: 'mdl-textfield__label') %>
+  </div>
+  <p>&nbsp;</p>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.label(:max_days_since_last_passed_test, 'Maximum days since last passed test') %>
+    <%= f.number_field(:max_days_since_last_passed_test, in: 1..90) %>
+  </div>
+  <p>&nbsp;</p>
+  <!-- Colored FAB button with ripple -->
+  <%= f.button(class: 'mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored') do %>
+    <i class="material-icons">arrow_forward</i>
+  <% end %>
+
+<% end %>
